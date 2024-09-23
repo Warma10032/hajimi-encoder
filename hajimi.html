@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哈基米加密网站</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #eef0f1; /* 背景色 */
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px; /* 圆角效果 */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50; /* 标题颜色 */
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1em; /* 字体大小 */
+            margin-bottom: 10px;
+        }
+        .textarea-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        textarea {
+            width: calc(100% - 30px); /* 减去按钮宽度和内边距 */
+            height: 150px; /* 高度调整 */
+            padding: 15px; /* 内边距 */
+            border: 1px solid #ccc;
+            border-radius: 10px; /* 更圆滑的边角 */
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2); /* 内阴影效果 */
+            transition: border-color 0.3s; /* 边框颜色变化 */
+            font-size: 1em; /* 字体大小 */
+            resize: none; /* 禁止缩放 */
+        }
+        textarea:focus {
+            border-color: #4CAF50; /* 聚焦时的边框颜色 */
+            outline: none; /* 去掉聚焦的轮廓 */
+        }
+        .copy-btn {
+            position: absolute;
+            top: 15px;
+            right: 10px; /* 与textarea左右对齐 */
+            background-color: #e0e0e0; /* 按钮背景 */
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            transition: background-color 0.3s; /* 按钮背景色变化 */
+        }
+        .copy-btn:hover {
+            background-color: #d4d4d4; /* 悬停效果 */
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50; /* 按钮颜色 */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s; /* 按钮颜色变化 */
+        }
+        button:hover {
+            background-color: #45a049; /* 悬停效果 */
+        }
+        #error {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold; /* 错误信息加粗 */
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-between; /* 按钮元素均匀分布 */
+            margin-bottom: 20px;
+        }
+        /* Toast Notification 样式 */
+        .toast {
+            display: none;
+            min-width: 250px;
+            background-color: #333;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            padding: 16px;
+            position: absolute; /* 修改为相对于复制按钮的定位 */
+            z-index: 1;
+            right: 10px; /* 相对于复制按钮右边 */
+            top: -50px; /* 相对于复制按钮上方显示 */
+            font-size: 17px;
+        }
+        .toast.show {
+            display: block;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s; /* 动画效果 */
+        }
+        @keyframes fadein {
+            from {opacity: 0;} 
+            to {opacity: 1;}
+        }
+        @keyframes fadeout {
+            from {opacity: 1;} 
+            to {opacity: 0;}
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>哈基米 加密解密工具</h1>
+    
+    <p>人言：</p>
+    <div class="textarea-container">
+        <textarea id="inputText" placeholder="请输入文本..."></textarea>
+        <button class="copy-btn" onclick="copyToClipboard('inputText', this)">复制</button>
+        <div id="toast-input" class="toast">已复制到剪贴板</div> <!-- 相对于输入框的提示 -->
+    </div>
+
+    <div class="button-group">
+        <button onclick="encryptText()">加密</button>
+        <button onclick="decryptText()">解密</button>
+    </div>
+
+    <p>曼波语：</p>
+    <div class="textarea-container">
+        <textarea id="outputText" placeholder="加密后的文本将显示在这里..."></textarea>
+        <button class="copy-btn" onclick="copyToClipboard('outputText', this)">复制</button>
+        <div id="toast-output" class="toast">已复制到剪贴板</div> <!-- 相对于输出框的提示 -->
+    </div>
+
+    <p id="error"></p>
+</div>
+
+<script>
+    // 字符到三进制字符串的转换函数
+    function charToTrinaryString(char) {
+        let unicode_val = char.charCodeAt(0);
+        let trinary_str = '';
+        while (unicode_val > 0) {
+            let remainder = unicode_val % 3;
+            trinary_str = remainder + trinary_str;
+            unicode_val = Math.floor(unicode_val / 3);
+        }
+        return trinary_str;
+    }
+
+    // 将三进制的数字替换为 '哈'、'基'、'米'
+    function trinaryToHajiami(trinary_str) {
+        let mapping = {'0': '哈', '1': '基', '2': '米'};
+        return [...trinary_str].map(digit => mapping[digit]).join('');
+    }
+
+    // 将 '哈'、'基'、'米' 转换回三进制数字
+    function hajiamiToTrinary(hajiami_str) {
+        let reverse_mapping = {'哈': '0', '基': '1', '米': '2'};
+        return [...hajiami_str].map(char => reverse_mapping[char]).join('');
+    }
+
+    // 编码函数
+    function encodeHajiami(inputStr) {
+        let encodedStr = '';
+        for (let char of inputStr) {
+            let trinary_str = charToTrinaryString(char);
+            let length = trinary_str.length;
+
+            // 根据长度选择前缀并补齐三进制字符串
+            let prefix, paddedTrinary;
+            if (length <= 6) {
+                prefix = '哈';
+                paddedTrinary = trinary_str.padStart(6, '0');
+            } else if (length <= 9) {
+                prefix = '基';
+                paddedTrinary = trinary_str.padStart(9, '0');
+            } else if (length <= 12) {
+                prefix = '米';
+                paddedTrinary = trinary_str.padStart(12, '0');
+            } else {
+                throw new Error("你的话超出正常人类的理解范围了吧");
+            }
+
+            let hajiami_str = trinaryToHajiami(paddedTrinary);
+            encodedStr += prefix + hajiami_str;
+        }
+        return encodedStr;
+    }
+
+    // 解码函数
+    function decodeHajiami(encodedStr) {
+        let decodedStr = '';
+        let i = 0;
+        while (i < encodedStr.length) {
+            let prefix = encodedStr[i];
+            i++;
+
+            let length;
+            if (prefix === '哈') {
+                length = 6;
+            } else if (prefix === '基') {
+                length = 9;
+            } else if (prefix === '米') {
+                length = 12;
+            } else {
+                throw new Error("无效的哈基米编码，曼波听不懂哦~");
+            }
+
+            let hajiami_str = encodedStr.slice(i, i + length);
+            i += length;
+
+            // 检查是否合法的"哈""基""米"
+            if (!/^[哈基米]+$/.test(hajiami_str)) {
+                throw new Error("无效的哈基米编码，曼波听不懂哦~");
+            }
+
+            let trinary_str = hajiamiToTrinary(hajiami_str);
+            let unicode_val = parseInt(trinary_str, 3);
+            decodedStr += String.fromCharCode(unicode_val);
+        }
+        return decodedStr;
+    }
+
+    // 加密文本
+    function encryptText() {
+        let inputText = document.getElementById('inputText').value;
+        if (inputText.trim() === '') {
+            // 如果输入框为空，不进行任何操作
+            return;
+        }
+        let encodedText = encodeHajiami(inputText);
+        document.getElementById('outputText').value = encodedText;
+        document.getElementById('error').innerText = '';
+    }
+
+    // 解密文本
+    function decryptText() {
+        let inputText = document.getElementById('outputText').value;
+        if (inputText.trim() === '') {
+            // 如果输出框为空，不进行任何操作
+            return;
+        }
+        try {
+            let decodedText = decodeHajiami(inputText);
+            document.getElementById('inputText').value = decodedText;
+            document.getElementById('error').innerText = '';
+        } catch (error) {
+            document.getElementById('error').innerText = '解密失败: ' + error.message;
+        }
+    }
+
+
+    // 复制到剪贴板
+    function copyToClipboard(textareaId, button) {
+        const textarea = document.getElementById(textareaId);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999); // 兼容移动端
+        document.execCommand('copy');
+        showToast(button); // 显示复制成功的提示
+    }
+
+    // 显示 Toast 提示
+    function showToast(button) {
+        const toast = button.nextElementSibling; // 获取相应的toast提示框
+        toast.classList.add("show"); // 显示 Toast 提示
+        setTimeout(function() {
+            toast.classList.remove("show"); // 3秒后隐藏
+        }, 3000);
+    }
+
+</script>
+
+</body>
+</html>
