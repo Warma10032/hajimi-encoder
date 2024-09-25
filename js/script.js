@@ -119,8 +119,10 @@ function copyToClipboard(textareaId, button) {
     textarea.select();
     textarea.setSelectionRange(0, 99999); // 兼容移动端
     document.execCommand('copy');
+    textarea.blur(); // 取消选中状态
     showToast(button); // 显示复制成功的提示
 }
+
 
 // 显示 Toast 提示
 function showToast(button) {
