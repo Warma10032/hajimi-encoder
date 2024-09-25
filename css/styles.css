@@ -206,10 +206,11 @@ textarea:focus {
         align-items: center; /* 垂直居中 */
     }
     .container {
-        margin-right: auto;
+        margin: 0;
     }
     .profile-card {
         width: 250px; 
+        margin: 0;
     }
      /* 隐藏左右侧的图片 */
     body::before,
