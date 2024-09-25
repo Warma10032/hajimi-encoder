@@ -202,11 +202,12 @@ textarea:focus {
 /* 媒体查询：当屏幕宽度小于某个值时，调整flex方向 */
 @media (max-width: 800px) {
     .wrapper {
-        width: 100%;
         flex-direction: column; /* 改为垂直排列 */
         align-items: center; /* 垂直居中 */
     }
-
+    .container {
+        margin-right: auto;
+    }
     .profile-card {
         width: 250px; 
     }
