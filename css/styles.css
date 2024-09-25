@@ -217,7 +217,7 @@ textarea:focus {
      /* 隐藏左右侧的图片 */
     body::before,
     body::after {
-        display: none; /* 不显示图片 */
+        background-image: none; /* 不显示图片 */
     }
 }
 /* 黑夜模式 */
