@@ -207,10 +207,12 @@ textarea:focus {
     }
     .container {
         margin: 0;
+        margin-bottom: 10px;
     }
     .profile-card {
         width: 250px; 
         margin: 0;
+        margin-top: 10px;
     }
      /* 隐藏左右侧的图片 */
     body::before,
