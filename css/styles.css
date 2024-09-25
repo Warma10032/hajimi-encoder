@@ -57,7 +57,6 @@ body::after {
     border: 2px solid #ddd; /* 边框 */
     border-radius: 15px; /* 圆角效果 */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* 阴影效果 */
-    margin-right: 0; /* 去除右侧间距 */
 }
 .container h1 {
     text-align: center;
