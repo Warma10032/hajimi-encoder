@@ -291,8 +291,15 @@ window.onload = function() {
     document.body.style.setProperty('--right-bg-image', `url('${rightImages[rightImageIndex]}')`);
 };
 
-tippy('.icon', {
+tippy('#privateKeyIcon', {
     content: '输入任意字符串作为私钥，私钥将决定恺撒偏移量',
+    theme: 'light', // 设置主题
+    placement: 'bottom', // 工具提示位置（顶部）
+    arrow: true, // 显示箭头
+});
+
+tippy('#encoderTypeIcon', {
+    content: '输入三位不重复的字符用于编码',
     theme: 'light', // 设置主题
     placement: 'top', // 工具提示位置（顶部）
     arrow: true, // 显示箭头

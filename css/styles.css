@@ -130,7 +130,7 @@ body::after {
     margin: 0 10px;
 }
 .input-block {
-    width: 170px;
+    width: 180px;
     height: 25px;
     display: flex;
     justify-content: center; 
