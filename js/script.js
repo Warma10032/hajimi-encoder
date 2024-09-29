@@ -290,3 +290,10 @@ window.onload = function() {
     const rightImageIndex = Math.floor(Math.random() * rightImages.length);
     document.body.style.setProperty('--right-bg-image', `url('${rightImages[rightImageIndex]}')`);
 };
+
+tippy('.icon', {
+    content: '输入任意字符串作为私钥，私钥将决定恺撒偏移量',
+    theme: 'light', // 设置主题
+    placement: 'top', // 工具提示位置（顶部）
+    arrow: true, // 显示箭头
+});

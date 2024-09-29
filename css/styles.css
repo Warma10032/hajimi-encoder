@@ -146,8 +146,8 @@ body::after {
     font-size: 1em;
 }
 .input-block input {
-    height: 20px;
-    padding: 3px 3px 1px 3px; /* 内边距 */
+    height: 19px;
+    padding: 2px 3px; /* 内边距 */
     border: 1px solid #ccc;
     transition: border-color 0.3s; /* 边框颜色变化 */
     font-size: 1em; /* 字体大小 */
@@ -265,6 +265,17 @@ body::after {
         background-image: none; /* 不显示图片 */
     }
 }
+@media(max-width: 500px)
+{
+    .input-group {
+        flex-direction: column; /* 改为垂直排列 */
+        align-items: center; /* 垂直居中 */
+    }
+    .input-block {
+        margin: 5px;
+    }
+
+}
 /* 黑夜模式 */
 @media (prefers-color-scheme: dark) {
     body {
@@ -275,6 +286,7 @@ body::after {
     .container {
         background-color: #1e1e1e; /* 深色容器背景 */
         color: #ffffff; /* 白色文字 */
+        border: 1px solid #ffffff;
     }
 
     textarea {
@@ -287,6 +299,14 @@ body::after {
     }
     .copy-btn:hover {
         background-color: rgba(255, 255, 255, 0.2); /* 悬停效果 */
+    }
+    input {
+        background-color:#1e1e1e;
+        color:#ffffff;
+        border: 1px solid #ffffff;
+    }
+    .input-block{
+        border: 1px solid #ffffff;
     }
     .profile-card {
         background-color: #1e1e1e; /* 背景色 */
