@@ -68,9 +68,8 @@ body::after {
 }
 .textarea-container {
     position: relative;
-    margin-bottom: 20px;
 }
-textarea {
+.textarea-container textarea {
     width: calc(100% - 30px); /* 减去按钮宽度和内边距 */
     height: 180px; /* 高度调整 */
     padding: 10px; /* 内边距 */
@@ -81,7 +80,7 @@ textarea {
     font-size: 1.1em; /* 字体大小 */
     resize: none; /* 禁止缩放 */
 }
-textarea:focus {
+.textarea-container textarea:focus {
     border-color: #FF6699; /* 聚焦时的边框颜色 */
     outline: none; /* 去掉聚焦的轮廓 */
 }
@@ -108,7 +107,7 @@ textarea:focus {
 .button-group {
     display: flex;
     justify-content: space-between; /* 按钮元素均匀分布 */
-    margin-bottom: 10px;
+    margin: 10px;
 }
 .button-group button {
     padding: 10px 40px;
@@ -124,6 +123,52 @@ textarea:focus {
 .button-group button:hover {
     background-color: rgba(255, 102, 153, 1); /* 悬停效果 */
 }
+.input-group{
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    margin: 0 10px;
+}
+.input-block {
+    width: 170px;
+    height: 25px;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    border: 1px solid #000000;
+    border-radius: 4px; /* 圆角 */
+    gap: 8px;
+}
+#privateKeyContainer{
+    width: 190px;
+}
+.label {
+    font-size: 1em;
+}
+.input-block input {
+    height: 20px;
+    padding: 3px 3px 1px 3px; /* 内边距 */
+    border: 1px solid #ccc;
+    transition: border-color 0.3s; /* 边框颜色变化 */
+    font-size: 1em; /* 字体大小 */
+    resize: none; /* 禁止缩放 */
+}
+.input-block input:focus {
+    border-color: #FF6699; /* 聚焦时的边框颜色 */
+    outline: none; /* 去掉聚焦的轮廓 */
+}
+#encoderType {
+    width: 50px;
+}
+#privateKey {
+    width: 100px;
+}
+.icon i {
+    font-size: 20px; /* 根据需要调整大小 */
+    color: #FF6699; /* 图标颜色 */
+    padding-top: 2px;
+}
+
 /* Toast Notification 样式 */
 .toast {
     display: none;
