@@ -130,7 +130,7 @@ body::after {
     margin: 0 10px;
 }
 .input-block {
-    width: 180px;
+    width: 220px;
     height: 25px;
     display: flex;
     justify-content: center; 
@@ -140,7 +140,7 @@ body::after {
     gap: 8px;
 }
 #privateKeyContainer{
-    width: 190px;
+    width: 230px;
 }
 .label {
     font-size: 1em;
@@ -158,10 +158,10 @@ body::after {
     outline: none; /* 去掉聚焦的轮廓 */
 }
 #encoderType {
-    width: 50px;
+    width: 80px;
 }
 #privateKey {
-    width: 100px;
+    width: 140px;
 }
 .icon i {
     font-size: 20px; /* 根据需要调整大小 */
@@ -265,7 +265,7 @@ body::after {
         background-image: none; /* 不显示图片 */
     }
 }
-@media(max-width: 500px)
+@media(max-width: 600px)
 {
     .input-group {
         flex-direction: column; /* 改为垂直排列 */
